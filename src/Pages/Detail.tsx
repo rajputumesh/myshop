@@ -2,17 +2,6 @@ import React, { useState,useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { productdetail } from "../functions/api";
 
-    interface ITutorialData {
-        id?: number,
-        title: string,
-        image: string
-        price: string
-        saleprice: string
-        short_description: string
-        description: string,
-        brand:[];
-        category:[];
-    }
 
 const Detail = () => {
     const initialTutorialState = {
@@ -26,9 +15,10 @@ const Detail = () => {
         brand:"",
         category:""
       };
+
     let { proid } = useParams();
     const [product , setproduct] = useState(initialTutorialState);
-    const [quantity=0 , setQuantity] = useState();
+    
     useEffect( () => {
         allfunction();
     }, []);
@@ -37,18 +27,23 @@ const Detail = () => {
         const pro = await productdetail(proid);
         setproduct(pro);
     }; 
-
-    const changeQuantity = (type: string) =>{
-        if(type=='plus')
-        {
-            const qty = quantity+1;
-            setQuantity(qty);
-        }
-    }
     
     const imgpath = 'http://myshop.hombrehr.com/storage/products';
     const {id, name, price,image, saleprice, short_description, description} = product;
         
+
+    const [quantity=0 , setQuantity] = useState();
+    const changeQuantity = (type: string,qty:number) =>{
+        if(type=='plus')
+        {   
+            const changeqty:any = qty+1;
+            setQuantity(changeqty);
+        }else if(type=='minus')
+        {
+            const changeqty:any = qty-1;
+            setQuantity(changeqty);
+        }
+    }
     return (
         <div className="product">
             <div className="container">
@@ -62,12 +57,24 @@ const Detail = () => {
                         <p>{short_description}</p>
                         <h4>Sale Price - ₹{price} <small><s>
                             ₹{saleprice}</s></small></h4>
-                        <div style={{width:'150px'}}>
-                            <div className="input-group mb-3">
-                                <span className="input-group-text bg-warning" onClick={()=>changeQuantity('minus')}>-</span>
-                                <input type="number" className="form-control text-center" value={quantity} />
-                                <span className="input-group-text bg-warning" onClick={()=>changeQuantity('plus')}>+</span>
+                        <div className="d-flex my-4">
+                            <h4>QUANTITY</h4>
+                            <div className="">
+                                <div className="input-group mb-3 mx-3" style={{width:'150px'}}>
+                                    <span className="input-group-text bg-warning" onClick={()=>changeQuantity('minus',quantity)}>-</span>
+                                    <input type="number" className="form-control text-center" value={quantity} />
+                                    <span className="input-group-text bg-warning" onClick={()=>changeQuantity('plus',quantity)}>+</span>
+                                </div>
                             </div>
+                        </div>
+                        <div>
+                            <button className="btn btn-primary"><i className="fa fa-shopping-cart"></i> Add TO Cart</button>
+                        </div>
+                        <div>
+                        <div
+                            dangerouslySetInnerHTML={{
+                                __html: description
+                            }}></div>
                         </div>
                     </div>
                 </div>
