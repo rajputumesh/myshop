@@ -32,7 +32,7 @@ const Detail = () => {
     const {id, name, price,image, saleprice, short_description, description} = product;
         
 
-    const [quantity=0 , setQuantity] = useState();
+    const [quantity=1 , setQuantity] = useState();
     const changeQuantity = (type: string,qty:number) =>{
         if(type=='plus')
         {   
@@ -68,7 +68,7 @@ const Detail = () => {
                             </div>
                         </div>
                         <div>
-                            <button className="btn btn-primary"><i className="fa fa-shopping-cart"></i> Add TO Cart</button>
+                            <button className="btn btn-primary"><i className="fa fa-shopping-cart" ></i> Add TO Cart</button>
                         </div>
                         <div>
                         <div

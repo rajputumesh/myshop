@@ -58,7 +58,7 @@ const Header: FC = () => {
         </Nav>
         <div className="py-2 bg-primary">
             <Container className="content-center">
-                <ul className="nav d-flex flex-wrap">
+                <ul className="nav d-flex justify-content-center">
                     {category}
                 </ul>
             </Container>
