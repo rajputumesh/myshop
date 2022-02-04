@@ -6,7 +6,7 @@ import Detail from "../Pages/Detail";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import Cart from "../Pages/Cart";
-import { propTypes } from "react-bootstrap/esm/Image";
+import NotFound from "../Pages/NotFound";
 
 const AppRoute:FC = () => {
 
@@ -21,6 +21,7 @@ const AppRoute:FC = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/cart" element={<Cart />} />
+                <Route path="/forget_password" element={<NotFound />} />
             </Routes>
         </div>
     )
