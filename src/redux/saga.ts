@@ -1,8 +1,12 @@
-import {loginUser, USER_LOGIN, SIGN_UP_FAILURE, loginComplete, signUp, signUpSuccess, signUpFailure, handleSignOut,USER_LOADING} from './actions/userAction';
+import {loginUser, USER_LOGIN, ERROR_LOGIN, SIGN_UP_FAILURE, loginComplete, signUp, signUpSuccess, signUpFailure, handleSignOut,USER_LOADING, USER_LOGIN_COMPLETE} from './actions/userAction';
 import { put, call, takeEvery } from 'redux-saga/effects';
-
+import { get } from 'lodash';
+ type responseType= {
+    token: any;
+    user: any;
+  
+}
 const signIn = async (payload: any) => {
-    try {
         const response = await fetch('http://myshop.hombrehr.com/api/user/login', {
             method: "post",
             headers: new Headers({
@@ -15,13 +19,9 @@ const signIn = async (payload: any) => {
             let responseBody: any = await response.json();
             console.log(responseBody);
             return responseBody;
-        }else{
-            return response;
+        
         }
-    } catch (ex) {
-    console.log(ex);
-        return ex;
-    }
+    return response;
 };
 
 function* loginUserfunction(data:any)
@@ -29,18 +29,17 @@ function* loginUserfunction(data:any)
     const {payload} = data;
     try{
         yield put({ type: USER_LOADING });
-        const response = yield call<any>(signIn, payload);
+        const response: responseType = yield call<any>(signIn, payload);
+        if (response.user) {
         yield put({
-            type:USER_LOGIN,
+            type:USER_LOGIN_COMPLETE,
             payload:response,
         }) 
+      }
     }
-    catch(ex){
-        yield put({ 
-            type:  SIGN_UP_FAILURE,
-            payload:ex,
-        });
-        console.log("saga error ="+ex);
+    catch(err){
+        const message: string = get(err, 'message');
+        yield put({ type: ERROR_LOGIN, payload: message });
     };
 }
 

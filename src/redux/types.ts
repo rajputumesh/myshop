@@ -4,7 +4,11 @@ export type initialStateType= {
     email: string;
     password: string;
     isLoading:boolean;
-    signUp:any
+    signUp:any;
+    errorMessage: string;
 }
 
 
+export type rootState = {
+    user: initialStateType;
+}

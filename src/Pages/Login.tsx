@@ -1,39 +1,44 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-
-interface StateInterface {
-    email: string;
-    password: string;
+import {loginUser} from "../redux/actions/userAction";
+import {rootState} from "../redux/types";
+const StateInterface = {
+    email: '',
+    password: '',
 }
 const Login:FC = () => {
     
-    const [form, setForm] = useState({
-        email: '',
-        password: '',
-    })
-    
-    const changeHandler = (event: { target: { name: any; value: any; }; }) => {
+        const dispatch = useDispatch();
+        
+    const [form, setForm] = useState(StateInterface)
+
+    const changeHandler = (event: any) => {
         setForm({ ...form, [event.target.name]: event.target.value });
     }
       
-    const  submitForm = async () =>{
-        try {
-            const response = await fetch('http://myshop.hombrehr.com/api/user/login', {
-                method: "post",
-                headers: new Headers({
-                    "Content-Type": "application/json",
-                    Accept: "application/json"
-                }),
-                body: JSON.stringify(form)
-            });
-            if (response.status === 200) {
-                let responseBody: any = await response.json();
-                console.log(responseBody);
-            }
-            console.log('hiii');
-        } catch (ex) {
-            console.log(ex);
-        }
+    // const  submitForm = async () =>{
+    //     try {
+    //         const response = await fetch('http://myshop.hombrehr.com/api/user/login', {
+    //             method: "post",
+    //             headers: new Headers({
+    //                 "Content-Type": "application/json",
+    //                 Accept: "application/json"
+    //             }),
+    //             body: JSON.stringify(form)
+    //         });
+    //         if (response.status === 200) {
+    //             let responseBody: any = await response.json();
+    //             console.log(responseBody);
+    //         }
+    //         console.log('hiii');
+    //     } catch (ex) {
+    //         console.log(ex);
+    //     }
+    // }
+    const submitForm = (e: any) => {
+        e.preventDefault();
+        dispatch(loginUser(form));
     }
     return (
         <div className="my-5">
@@ -71,3 +76,7 @@ const Login:FC = () => {
 }
 
 export default Login;
+function emptyState(): any {
+    throw new Error("Function not implemented.");
+}
+

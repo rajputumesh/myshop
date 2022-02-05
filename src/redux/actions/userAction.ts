@@ -5,6 +5,7 @@ export const SIGN_UP_SUCCESS = 'user/SIGN_UP_SUCCESS';
 export const SIGN_UP_FAILURE = 'user/SIGN_UP_FAILURE';
 export const SIGN_OUT = 'SIGN_OUT';
 export const USER_LOADING = 'USER_LOADING';
+export const ERROR_LOGIN = 'user/ERROR_LOGIN';
 
 export const loginUser = (payload: any) => {
     return {
@@ -43,5 +44,12 @@ export const signUpSuccess = (payload: any) => {
   export const handleSignOut = () => {
     return {
       type: SIGN_OUT,
+    };
+  };
+
+  export const errorLoginIn = (payload: any) => {
+    return {
+      type: ERROR_LOGIN,
+      payload,
     };
   };
