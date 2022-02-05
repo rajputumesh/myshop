@@ -1,6 +1,7 @@
 import {loginUser, USER_LOGIN, ERROR_LOGIN, SIGN_UP_FAILURE, loginComplete, signUp, signUpSuccess, signUpFailure, handleSignOut,USER_LOADING, USER_LOGIN_COMPLETE} from './actions/userAction';
 import { put, call, takeEvery } from 'redux-saga/effects';
 import { get } from 'lodash';
+import {useNavigate} from 'react-router-dom';
  type responseType= {
     token: any;
     user: any;
@@ -24,9 +25,11 @@ const signIn = async (payload: any) => {
     return response;
 };
 
-function* loginUserfunction(data:any)
+function* LoginUserfunction(data:any)
 {
-    const {payload} = data;
+    console.log("saga", data);
+    const {payload, navigate} = data;
+   // const navigate = useNavigate();
     try{
         yield put({ type: USER_LOADING });
         const response: responseType = yield call<any>(signIn, payload);
@@ -35,16 +38,16 @@ function* loginUserfunction(data:any)
             type:USER_LOGIN_COMPLETE,
             payload:response,
         }) 
+          navigate('/');
       }
     }
     catch(err){
-        const message: string = get(err, 'message');
-        yield put({ type: ERROR_LOGIN, payload: message });
+        console.log('error', err);
     };
 }
 
 function* loginSaga() {
-    yield takeEvery(USER_LOGIN, loginUserfunction);
+    yield takeEvery(USER_LOGIN, LoginUserfunction);
 }
 
 export default loginSaga;

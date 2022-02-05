@@ -7,10 +7,11 @@ export const SIGN_OUT = 'SIGN_OUT';
 export const USER_LOADING = 'USER_LOADING';
 export const ERROR_LOGIN = 'user/ERROR_LOGIN';
 
-export const loginUser = (payload: any) => {
+export const loginUser = (payload: any, navigate: any) => {
     return {
       type: USER_LOGIN,
       payload,
+      navigate,
     };
 };
 
@@ -47,9 +48,3 @@ export const signUpSuccess = (payload: any) => {
     };
   };
 
-  export const errorLoginIn = (payload: any) => {
-    return {
-      type: ERROR_LOGIN,
-      payload,
-    };
-  };

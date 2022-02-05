@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import {loginUser} from "../redux/actions/userAction";
 import {rootState} from "../redux/types";
+import {useNavigate} from 'react-router-dom';
 const StateInterface = {
     email: '',
     password: '',
@@ -10,8 +11,8 @@ const StateInterface = {
 const Login:FC = () => {
     
         const dispatch = useDispatch();
-        
-    const [form, setForm] = useState(StateInterface)
+        const navigate = useNavigate();
+        const [form, setForm] = useState(StateInterface)
 
     const changeHandler = (event: any) => {
         setForm({ ...form, [event.target.name]: event.target.value });
@@ -38,7 +39,7 @@ const Login:FC = () => {
     // }
     const submitForm = (e: any) => {
         e.preventDefault();
-        dispatch(loginUser(form));
+        dispatch(loginUser(form, navigate));
     }
     return (
         <div className="my-5">
