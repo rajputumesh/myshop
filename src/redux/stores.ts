@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import loginSaga from './saga';
+import authSagas from './saga';
 import rootReducer from './reducers';
 declare global {
     interface Window {
@@ -15,7 +15,7 @@ export const configStore = () => {
       rootReducer,
       composeEnhancers(applyMiddleware(sagaMiddleware)),
     );
-    sagaMiddleware.run(loginSaga);
+    sagaMiddleware.run(authSagas);
     return { store };
   };
       

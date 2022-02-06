@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import {loginUser} from "../redux/actions/userAction";
-import {rootState} from "../redux/types";
+// import {rootState} from "../redux/types";
 import {useNavigate} from 'react-router-dom';
 const StateInterface = {
     email: '',
